@@ -23,6 +23,10 @@ Route::get('/sales', function () {
     return view('coffee_sales');
 })->middleware(['auth'])->name('coffee.sales');
 
+Route::controller(SalesController::class)->group(function () {
+    Route::post('/sales', 'save');
+});
+
 Route::get('/shipping-partners', function () {
     return view('shipping_partners');
 })->middleware(['auth'])->name('shipping.partners');

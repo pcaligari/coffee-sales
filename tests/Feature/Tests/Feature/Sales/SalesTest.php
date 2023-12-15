@@ -28,6 +28,8 @@ class SalesTest extends TestCase
             'unit-cost' => 20.4
         ]);
 
+        //$response->dump();
+
         $response->assertSessionHasNoErrors();
     }
 
