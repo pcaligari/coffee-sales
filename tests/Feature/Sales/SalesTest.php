@@ -3,8 +3,10 @@
 namespace Tests\Feature\Sales;
 
 use App\Models\User;
+use App\Models\Sales;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\TestResponse;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class SalesTest extends TestCase
@@ -48,6 +50,27 @@ class SalesTest extends TestCase
 
 
         $response->assertSessionHasNoErrors();
+    }
+
+    public static function salesPriceProvider() :array
+    {
+        return [
+            [10, 1, 23.34],
+            [20.50, 2, 64.67],
+            [12, 5, 90]
+        ];
+    }
+
+    #[DataProvider('salesPriceProvider')]
+    public function test_sale_price_calculation_works($unitPrice, $units, $expected) :void
+    {
+        $model = new Sales();
+
+        $model->setUnitPrice();
+        $model->setUnits();
+        $result = $model->calculateSalePrice();
+
+        $this->assertEquals($expected, $result);
     }
 
 }
