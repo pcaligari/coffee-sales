@@ -2,42 +2,33 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class Sales extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    private float $unitPrice;
+    private int $units;
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    public function setUnitPrice($price) :void
+    {
+        $this->unitPrice = $price;
+    }
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    public function setUnits($qty) :void
+    {
+        $this->units = $qty;
+    }
+
+    public function calculateSalePrice() :float
+    {
+        $cost = $this->units * $this->unitPrice;
+        // The following would be better as class constants or even configuration variables in a production system
+        $profitMargin = 0.25;
+        $shippingCost = 10.00;
+
+        // the addition of the addition 0.004 causes number format to always round up the pennies
+        return number_format(($cost / (1 - $profitMargin) + $shippingCost) + 0.004, 2);
+    }
+
 }
