@@ -44,4 +44,12 @@ class Sales extends Model
         return number_format(($cost / (1 - $profitMargin) + $shippingCost) + 0.004, 2);
     }
 
+    public function save(array $options = [])
+    {
+        $this->quantity = $this->units;
+        $this->unitCost = $this->unitPrice;
+        $this->salesPrice = $this->calculateSalePrice();
+        parent::save($options);
+    }
+
 }
