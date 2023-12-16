@@ -7,6 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 class Sales extends Model
 {
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'quantity',
+        'unitCost',
+        'salesPrice'
+    ];
+
+    protected $table = 'sales_ledger';
+
     private float $unitPrice;
     private int $units;
 
