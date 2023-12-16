@@ -66,8 +66,8 @@ class SalesTest extends TestCase
     {
         $model = new Sales();
 
-        $model->setUnitPrice();
-        $model->setUnits();
+        $model->setUnitPrice($unitPrice);
+        $model->setUnits($units);
         $result = $model->calculateSalePrice();
 
         $this->assertEquals($expected, $result);
