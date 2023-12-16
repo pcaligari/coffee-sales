@@ -19,7 +19,7 @@
                         <div class="flex-col">
                             <x-label for="unit" :value="__('Unit Cost (£)')"></x-label>
                             <x-input id="unit" class="block mt-1" type="currency" name="unitCost"
-                                     :value="old('unitCost')" required autofocus/>
+                                     :value="old('unitCost')" required />
                         </div>
                         <div class="flex-col">
                             <span id="fakeLabel" class="block font-medium text-sm text-gray-700">Selling Price</span>
