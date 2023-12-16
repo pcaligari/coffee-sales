@@ -31,7 +31,7 @@ class SalesTest extends TestCase
         $response->assertSee([
             'salesForm',
             'Quantity',
-            'Unit Cost (&pound;)',
+            'Unit Cost (£)',
             'Selling Price',
             'Record Sale'
         ]);
