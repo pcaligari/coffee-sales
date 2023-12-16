@@ -20,22 +20,19 @@ class Sales extends Model
 
     protected $table = 'sales_ledger';
 
-    private float $unitPrice;
-    private int $units;
-
-    public function setUnitPrice($price) :void
+    public function setUnitCost($price) :void
     {
-        $this->unitPrice = $price;
+        $this->unitCost = $price;
     }
 
-    public function setUnits($qty) :void
+    public function setQuantity($qty) :void
     {
-        $this->units = $qty;
+        $this->quantity = $qty;
     }
 
     public function calculateSalePrice() :float
     {
-        $cost = $this->units * $this->unitPrice;
+        $cost = $this->quantity * $this->unitCost;
         // The following would be better as class constants or even configuration variables in a production system
         $profitMargin = 0.25;
         $shippingCost = 10.00;
@@ -46,8 +43,6 @@ class Sales extends Model
 
     public function save(array $options = [])
     {
-        $this->quantity = $this->units;
-        $this->unitCost = $this->unitPrice;
         $this->salesPrice = $this->calculateSalePrice();
         parent::save($options);
     }

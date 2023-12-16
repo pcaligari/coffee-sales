@@ -28,8 +28,8 @@ class SalesController extends Controller
 
         $sale = new Sales();
 
-        $sale->setUnits($request->quantity);
-        $sale->setUnitPrice($request->unitCost);
+        $sale->setQuantity($request->quantity);
+        $sale->setUnitCost($request->unitCost);
 
         $sale->save();
         return redirect(RouteServiceProvider::HOME);
