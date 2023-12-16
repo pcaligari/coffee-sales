@@ -26,7 +26,9 @@
                             <div id="sellingPriceContent"></div>
                         </div>
                         <div class="flex-col">
-                            <button type="submit" class="btn">Record Sale</button>
+                            <x-button class="ml-3">
+                                {{ __('Record Sale') }}
+                            </x-button>
                         </div>
                     </div>
                 </form>
