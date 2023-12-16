@@ -32,7 +32,34 @@
                         </div>
                     </div>
                 </form>
+
+                <br/><br/>
+
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    {{ __('Previous Sales') }}
+                </h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Quantity</td>
+                            <td>Unit Cost</td>
+                            <td>Selling Price</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach( $ledger as $row)
+                        <tr>
+                            <td>{{$row->quantity}}</td>
+                            <td>{{$row->unitCost}}</td>
+                            <td>{{$row->salesPrice}}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+
             </div>
         </div>
     </div>
+
 </x-app-layout>

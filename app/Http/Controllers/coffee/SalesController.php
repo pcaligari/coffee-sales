@@ -16,7 +16,9 @@ class SalesController extends Controller
      */
     public function show()
     {
-        return view('coffee_sales');
+        $sales = Sales::all();
+
+        return view('coffee_sales',['ledger' => $sales]);
     }
 
     public function save(Request $request)
