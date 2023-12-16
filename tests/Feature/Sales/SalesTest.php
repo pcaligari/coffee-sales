@@ -4,6 +4,7 @@ namespace Tests\Feature\Sales;
 
 use App\Models\User;
 use App\Models\Sales;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\TestResponse;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -45,11 +46,13 @@ class SalesTest extends TestCase
 
         $response = $this->actingAs($user)->post('/sales', [
             'quantity' => 10,
-            'unit-cost' => 20.4
+            'unitCost' => 20.4
         ]);
 
 
         $response->assertSessionHasNoErrors();
+
+        $response->assertRedirect(RouteServiceProvider::HOME);
     }
 
     public static function salesPriceProvider() :array
