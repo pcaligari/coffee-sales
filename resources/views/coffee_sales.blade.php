@@ -8,9 +8,28 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    @todo
-                </div>
+                <form id="salesForm" method="POST" action="{{ route('record.sales') }}">
+                    @csrf
+                    <div class="flex">
+                        <div class="flex-col">
+                            <x-label for="quantity" :value="__('Quantity')"></x-label>
+                            <x-input id="quantity" class="block mt-1" type="number" name="quantity"
+                                     :value="old('quantity')" required autofocus/>
+                        </div>
+                        <div class="flex-col">
+                            <x-label for="unit" :value="__('Unit Cost (£)')"></x-label>
+                            <x-input id="unit" class="block mt-1" type="currency" name="unitCost"
+                                     :value="old('unitCost')" required autofocus/>
+                        </div>
+                        <div class="flex-col">
+                            <span id="fakeLabel" class="block font-medium text-sm text-gray-700">Selling Price</span>
+                            <div id="sellingPriceContent"></div>
+                        </div>
+                        <div class="flex-col">
+                            <button type="submit" class="btn">Record Sale</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
