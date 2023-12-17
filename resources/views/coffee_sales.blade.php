@@ -1,3 +1,46 @@
+@push('other-scripts')
+    <script>
+        // Going old-skool with Jquery - would be lovely as a react view instead though
+        function getPrice() {
+            $.ajax(
+                {
+                    url: "/getPrice?units=" + $("#qty").val() + "&unitCost=" + $("#unit").val(),
+                    success: function(response) {
+                        $("#sellingPriceContent").innerText(response);
+                    },
+                    error: function(xhr) {
+                        alert("Something went wrong - please try again");
+                    }
+                }
+            )
+        }
+
+        function changeAction() {
+            if (!isNaN(parseInt($("#qty").val())) && !isNaN(parseFloat($("#unit").val()))) {
+                getPrice();
+            }
+        }
+
+        $(document).on("change", '#unit', function(){
+            if (isNaN(parseFloat($("#unit").val()))) {
+                alert('Unit Cost must be a price e.g 10.50');
+                return;
+            }
+
+            changeAction();
+        });
+
+        $(document).on("change", '#qty', function(){
+            if (isNaN(parseInt($("#qty").val()))) {
+                alert('Quantity must be a whole number');
+                return;
+            }
+
+            changeAction();
+        });
+
+    </script>
+@endpush
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -12,14 +55,12 @@
                     @csrf
                     <div class="flex">
                         <div class="flex-col">
-                            <x-label for="quantity" :value="__('Quantity')"></x-label>
-                            <x-input id="quantity" class="block mt-1" type="number" name="quantity"
-                                     :value="old('quantity')" required autofocus/>
+                            <x-label for="qty" :value="__('Quantity')"></x-label>
+                            <input type="number" id="qty" class="block mt-1" name="quantity" required />
                         </div>
                         <div class="flex-col">
                             <x-label for="unit" :value="__('Unit Cost (£)')"></x-label>
-                            <x-input id="unit" class="block mt-1" type="currency" name="unitCost"
-                                     :value="old('unitCost')" required />
+                            <input type="text" id="unit" class="block mt-1"  name="unitCost" required/>
                         </div>
                         <div class="flex-col">
                             <span id="fakeLabel" class="block font-medium text-sm text-gray-700">Selling Price</span>
