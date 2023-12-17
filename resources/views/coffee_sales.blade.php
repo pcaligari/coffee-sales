@@ -4,7 +4,7 @@
         function getPrice() {
             $.ajax(
                 {
-                    url: "/getPrice?units=" + $("#qty").val() + "&unitCost=" + $("#unit").val(),
+                    url: "/getPrice?units=" + $("#qty").val() + "&unitCost=" + $("#unit").val() + "&product=" + $("#product").val(),
                     success: function(response) {
                         $("#sellingPriceContent").text(response);
                     },
@@ -36,6 +36,10 @@
                 return;
             }
 
+            changeAction();
+        });
+
+        $(document).on("change", '#product', function() {
             changeAction();
         });
 

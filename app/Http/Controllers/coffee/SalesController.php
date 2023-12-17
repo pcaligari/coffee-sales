@@ -27,19 +27,21 @@ class SalesController extends Controller
         )->join(
             'products', 's.product_id', '=', 'products.id'
         )->get();
-        
+
         return view('coffee_sales',['ledger' => $sales]);
     }
 
     public function save(Request $request)
     {
         $request->validate([
+            'product_id' => ['required'],
             'quantity' => ['required'],
             'unitCost' => ['required']
         ]);
 
         $sale = new Sales();
 
+        $sale->setProductId($request->product_id);
         $sale->setQuantity($request->quantity);
         $sale->setUnitCost($request->unitCost);
 
