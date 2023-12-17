@@ -36,5 +36,6 @@ class SalesController extends Controller
         $sale->save();
         return redirect(RouteServiceProvider::HOME);
     }
+
 }
 

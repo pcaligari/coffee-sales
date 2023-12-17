@@ -6,7 +6,7 @@
                 {
                     url: "/getPrice?units=" + $("#qty").val() + "&unitCost=" + $("#unit").val(),
                     success: function(response) {
-                        $("#sellingPriceContent").innerText(response);
+                        $("#sellingPriceContent").text(response);
                     },
                     error: function(xhr) {
                         alert("Something went wrong - please try again");
