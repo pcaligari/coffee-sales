@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Sales;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SalesController extends Controller
 {
@@ -16,8 +17,17 @@ class SalesController extends Controller
      */
     public function show()
     {
-        $sales = Sales::all();
-
+        $sales = DB::table('sales_ledger', 's')->select(
+            [
+                'products.name',
+                's.quantity',
+                's.unitCost',
+                's.salesPrice'
+            ]
+        )->join(
+            'products', 's.product_id', '=', 'products.id'
+        )->get();
+        
         return view('coffee_sales',['ledger' => $sales]);
     }
 

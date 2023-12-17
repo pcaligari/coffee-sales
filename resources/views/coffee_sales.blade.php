@@ -55,6 +55,13 @@
                     @csrf
                     <div class="flex">
                         <div class="flex-col">
+                            <x-label for="product" :value="__('Product')"></x-label>
+                            <select name="product_id" id="product">
+                                <option value="1">Gold Coffee</option>
+                                <option value="2">Aribic Coffee</option>
+                            </select>
+                        </div>
+                        <div class="flex-col">
                             <x-label for="qty" :value="__('Quantity')"></x-label>
                             <input type="number" id="qty" class="block mt-1" name="quantity" required />
                         </div>
@@ -83,6 +90,7 @@
                 <table>
                     <thead>
                         <tr>
+                            <td>Product</td>
                             <td>Quantity</td>
                             <td>Unit Cost</td>
                             <td>Selling Price</td>
@@ -91,6 +99,7 @@
                     <tbody>
                     @foreach( $ledger as $row)
                         <tr>
+                            <td>{{$row->name}}</td>
                             <td>{{$row->quantity}}</td>
                             <td>{{$row->unitCost}}</td>
                             <td>{{$row->salesPrice}}</td>
