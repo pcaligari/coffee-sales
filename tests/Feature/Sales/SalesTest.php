@@ -9,6 +9,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\TestResponse;
+use Mockery\MockInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
@@ -42,22 +43,33 @@ class SalesTest extends TestCase
         ]);
     }
 
-//    This is now the only broken test - it needs the fake model binding to the service container... somehow
-//    public function test_sales_can_be_recorded() :void
-//    {
-//        $user = User::factory()->create();
-//
-//        $response = $this->actingAs($user)->post('/sales', [
-//            'product_id' => 1,
-//            'quantity' => 10,
-//            'unitCost' => 20.4
-//        ]);
-//
-//
-//        $response->assertSessionHasNoErrors();
-//
-//        $response->assertRedirect(RouteServiceProvider::HOME);
-//    }
+    public function test_sales_can_be_recorded() :void
+    {
+        $this->mock(Products::class, function (MockInterface $mock) {
+
+            $productCollection = new Collection();
+            $productCollection->add(Products::factory()->create());
+            $mock->shouldReceive('where')->once()->andReturn(
+                $mock
+            );
+            $mock->shouldReceive('get')->once()->andReturn(
+                $productCollection
+            );
+        });
+
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->post('/sales', [
+            'product_id' => 1,
+            'quantity' => 10,
+            'unitCost' => 20.4
+        ]);
+
+
+        $response->assertSessionHasNoErrors();
+
+        $response->assertRedirect(RouteServiceProvider::HOME);
+    }
 
   public static function salesPriceProvider() :array
     {
