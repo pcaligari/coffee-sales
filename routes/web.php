@@ -36,6 +36,11 @@ Route::get('/getPrice', function (Request $request) {
     $sale->setUnitCost($request->unitCost);
     $sale->setProductId($request->product);
 
+    $product = \App\Models\Products::where(
+        'id', $request->product
+    )->get();
+    $sale->setProduct($product);
+
     return response($sale->calculateSalePrice(), 200)->header('Content-Type', 'text/plain');
 
 });

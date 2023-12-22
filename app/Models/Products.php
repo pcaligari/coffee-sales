@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 
 class Products extends Model
 {
 
+    use HasFactory;
     /**
      * The attributes that are mass assignable.
      *
@@ -16,8 +19,5 @@ class Products extends Model
         'name',
         'margin'
     ];
-
-    protected $table = 'sales_ledger';
-
 
 }

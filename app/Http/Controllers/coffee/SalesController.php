@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\coffee;
 
 use App\Http\Controllers\Controller;
+use App\Models\Products;
 use App\Models\Sales;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
@@ -10,8 +11,16 @@ use Illuminate\Support\Facades\DB;
 
 class SalesController extends Controller
 {
+
+    private Products $products;
+
+    public function __construct(Products $products)
+    {
+       $this->products = $products;
+    }
+
     /**
-     * Show the confirm password view.
+     * Show the coffee sales view.
      *
      * @return \Illuminate\View\View
      */
@@ -39,14 +48,30 @@ class SalesController extends Controller
             'unitCost' => ['required']
         ]);
 
+        $product = $this->getProducts();
+        $product = $product::where(
+            'id', $request->product_id
+        )->get();
+
         $sale = new Sales();
 
         $sale->setProductId($request->product_id);
         $sale->setQuantity($request->quantity);
         $sale->setUnitCost($request->unitCost);
+        $sale->setProduct($product);
 
         $sale->save();
         return redirect(RouteServiceProvider::HOME);
+    }
+
+    public function getProducts(): Products
+    {
+        return $this->products;
+    }
+
+    public function setProducts(Products $products): void
+    {
+        $this->products = $products;
     }
 
 }

@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class Sales extends Model
 {
+
+    protected Collection $product;
 
     /**
      * The attributes that are mass assignable.
@@ -36,20 +38,16 @@ class Sales extends Model
         $this->product_id = $productId;
     }
 
+    public function setProduct(Collection $product) :void
+    {
+        $this->product = $product;
+    }
+
     public function calculateSalePrice() :float
     {
         $cost = $this->quantity * $this->unitCost;
 
-        // Lets query directly and break the tests - should be using a model class for this
-        $product = DB::table('products', 'p')->select(
-            [
-                'p.margin'
-            ]
-        )->where(
-            'id', '=', $this->product_id
-        )->get();
-
-        $profitMargin = $product[0]->margin / 100;
+        $profitMargin = $this->product[0]->margin / 100;
 
         // The following would be better as class constants or even configuration variables in a production system
         $shippingCost = 10.00;
